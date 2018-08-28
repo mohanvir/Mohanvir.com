@@ -1,0 +1,109 @@
+<html>
+    
+    <head>
+        <title> Test Your Reaction Speed</title>
+        
+        <style type ="text/css">
+            
+            #shape{
+            
+                position:relative;
+                top:100px;
+                left:200px;
+            }
+        
+        </style>
+        
+    </head>
+    
+    <body>
+        
+        <p> This small game is designed to test your reaction speed.</p>
+        <span>Click on the shape as fast as possible to see your reaction time! </span>
+        
+        <p> Your time: <span id ="timeTaken"> </span></p>
+        <p> Best time: <span id ="bestTime"> </span></p>
+        
+        
+        
+        <div id="shape"> </div>
+    
+        <script type = "text/javascript"> 
+            
+            //start timer
+            var start = new Date().getTime();
+            
+            var bestTime=100000.0;
+            
+            function getRandomColor() {
+                
+                  var letters = '0123456789ABCDEF'.split('');
+                    //.split turns the string into an array, 
+                  var color = '#'; //#xxxxxx = random colors code
+                  for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                        }
+                  return color;
+                        }
+
+/////////makeshape appear with random: start time, top, left
+            function makeShapeAppear() {
+                
+                var left= Math.random() *400;
+                var top= Math.random() *400;
+                var height= Math.random() *400;                
+            ///math.random = 0-1.0
+            //this will get us a circle or square
+                if (Math.random() > 0.5) {
+                document.getElementById("shape").style.borderRadius="50%";
+                    }
+                 else {
+                document.getElementById("shape").style.borderRadius= "0";
+                      }
+
+                document.getElementById("shape").style.backgroundColor = getRandomColor();
+                document.getElementById("shape").style.display = "block";
+                document.getElementById("shape").style.top = top +"px";
+                document.getElementById("shape").style.left = left +"px";
+                document.getElementById("shape").style.height = height +"px";
+                 document.getElementById("shape").style.width = height + "px";
+                   
+                start = new Date().getTime();
+                
+                }
+////////////////makeShapeAppear in a random 2 second time////////////
+            function appearAfterDelay() {
+                setTimeout(makeShapeAppear, Math.random() *2000);
+               
+
+            }
+////////////////////how orginal will appear/////////////////////////
+            appearAfterDelay();
+            
+            
+            document.getElementById("shape").onclick = function() {
+                document.getElementById("shape").style.display = "none";
+                 
+                //stackoverflow
+                 var end= new Date().getTime();
+                
+                var timeTaken = (end-start) /1000;
+                
+                document.getElementById("timeTaken").innerHTML = timeTaken + "s";
+                
+               if(timeTaken< bestTime){ 
+                   bestTime = timeTaken;
+                   document.getElementById("bestTime").innerHTML = timeTaken + "s";
+                
+                                      }
+                
+                
+                appearAfterDelay();               
+            }
+            
+            
+        </script>
+    
+    </body>
+
+</html>
